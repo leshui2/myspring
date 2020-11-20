@@ -17,9 +17,6 @@ public class StudentController {
 
     @Autowired
     private Environment env;
-
-    private String intPort;
-
     @RequestMapping("/selectByPrimaryKey")
     public JsonResult selectByPrimaryKey(Integer stuId) {
         Student student = studentService.selectById(stuId);
