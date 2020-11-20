@@ -14,6 +14,8 @@ public class reidsTest {
     @Autowired
     private RedisTemplate<String,String> redisTemplate;
 
+
+
     @Test
     public void set(){
         redisTemplate.opsForValue().set("k1","myValue");
