@@ -12,12 +12,13 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Service
 @Slf4j
 public class StudentService {
-    Logger LOGGER = LoggerFactory.getLogger(StudentService.class);
+
     @Autowired
     StudentMapper studentMapper;
 
@@ -46,11 +47,13 @@ public class StudentService {
 
     }
 
+
+
     public Student selectById(Integer stId) {
         String key = "student_" + stId;
         ValueOperations<String, Student> valueOperations = redisTemplate.opsForValue();
         if (redisTemplate.hasKey(key)) {
-            LOGGER.info("从缓存中读取:{}", key);
+            log.info("从缓存中读取:{}", key);
             Student student = valueOperations.get(key);
             return student;
         } else {
@@ -98,4 +101,8 @@ public class StudentService {
         return result;
     }
 
+    public List<Student> listData() {
+        List<Student> student =studentMapper.listData();
+        return student;
+    }
 }

@@ -50,6 +50,10 @@ spring:
     redis:
       time-to-live: 60000ms
     cache-names: cache1
+  web:
+    resources:
+      static-locations: classpath:/webapp/
+
 
 
 #多数据源配置
@@ -98,10 +102,12 @@ slave:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
 
+
 #mybatis配置
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.example.demo.entity
+
 
 #日志配置
 logging:

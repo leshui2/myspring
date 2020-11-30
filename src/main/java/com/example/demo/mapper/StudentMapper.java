@@ -2,6 +2,8 @@ package com.example.demo.mapper;
 
 import com.example.demo.entity.Student;
 
+import java.util.List;
+
 public interface StudentMapper {
     int deleteByPrimaryKey(Integer stuId);
 
@@ -14,4 +16,6 @@ public interface StudentMapper {
     int updateByPrimaryKeySelective(Student record);
 
     int updateByPrimaryKey(Student record);
+
+    List<Student> listData();
 }

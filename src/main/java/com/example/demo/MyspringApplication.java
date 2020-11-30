@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Import;
 @Import({DynamicDataSourceRegister.class})
 @SpringBootApplication
 public class MyspringApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(MyspringApplication.class, args);
     }

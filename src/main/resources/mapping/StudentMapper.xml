@@ -16,6 +16,11 @@
     from student
     where stu_id = #{stuId,jdbcType=INTEGER}
   </select>
+  <select id="listData" resultMap="BaseResultMap"  >
+    select
+    <include refid="Base_Column_List" />
+    from student
+  </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from student
     where stu_id = #{stuId,jdbcType=INTEGER}
