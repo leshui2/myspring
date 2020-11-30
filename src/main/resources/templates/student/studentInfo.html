@@ -33,19 +33,16 @@
         <tbody>
         <c:forEach items="${students}" var="s" varStatus="t" step="1">
             <tr>
-                <th>${s.stuId }</th>
-                <th>${s.stuName }</th>
-                <th>${s.stuAge }</th>
-                <th>${s.stuSex }</th>
+                <th><span th:text="${s.stuId}"></span></th>
+                <th><span th:text="${s.stuName}"></span></th>
+                <th><span th:text="${s.stuAge}"></span></th>
+                <th><span th:text="${s.stuSex}"></span></th>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </table>
-<script type="text/javascript">
-    console.info(students);
-</script>
+
 
 </body>
-
 </html>
