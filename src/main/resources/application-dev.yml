@@ -53,7 +53,9 @@ spring:
   web:
     resources:
       static-locations: classpath:/webapp/
-
+  thymeleaf:
+    cache: false
+    mode: LEGACYHTML5
 
 
 #多数据源配置
@@ -63,11 +65,18 @@ slave:
     db1:
       url: jdbc:mysql://192.168.0.254:3306/test?serverTimezone=Asia/Shanghai
       username: root
-      password: root
+      password: TnorNmQhsXbYLX8uV2WCS6aISDKpU9oT9efxVzNSngJ0gkTNZLNHDxRVUZv/i5gM5iQBAmYMKxZQI4YN35NTBQ==
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
+
       druid:
-        filters: stat
+        stat-view-servlet:
+          enabled: true
+        filter:
+          config:
+            enabled: true
+        connection-properties: config.decrypt=true;config.decrypt.key=${public-key1}
+        filters: stat,wall.log4j
         maxActive: 20
         initialSize: 1
         maxWait: 60000
@@ -80,14 +89,19 @@ slave:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-        druid:
     db2:
       url: jdbc:mysql://180.76.103.218:3306/test?serverTimezone=Asia/Shanghai
       username: root
-      password: yc@szyj#*2018yj
+      password: WdAlsp4YWEwl4/j+1RO3TqDqqqeAYHdMRfczeDiOlhDbfu801Fb7+BWD6ZYbPVH37vM20QvuRuxz0JByynwUjg==
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
       druid:
+        start-view-servlet:
+          enabled: true
+        filter:
+          config:
+            enabled: true
+        connection-properties: config.decrypt=true;config.decrypt.key=${public-key2}
         filters: stat
         maxActive: 20
         initialSize: 1
@@ -102,7 +116,8 @@ slave:
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
 
-
+public-key1: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJFR813V1xKaKzCSwyKu1eTKLb9elUjRc3q+GOJVg5pEuEoqou/xsvURgUO80Wkx0dacLRGR6+6htfD6t8QX7w0CAwEAAQ==
+public-key2: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAInrkfj+NG+HcGl7IEP3WFwVrVw4gQ/vVfcbFQSjMl+f8eFjIaMei7Mff/NmGTaAzvxhqdz851ctU3fTI0MC+E8CAwEAAQ==
 #mybatis配置
 mybatis:
   mapper-locations: classpath:mapping/*.xml

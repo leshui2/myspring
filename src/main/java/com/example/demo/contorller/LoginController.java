@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 
 @Controller
@@ -26,7 +27,8 @@ public class LoginController {
         User userInfo = userMapper.getUserInfo(user);
         if (userInfo == null) {
             return "此用户不存在!";
-        } else if (user.getName() == userInfo.getName() && user.getPassword() == userInfo.getPassword()) {
+        } else if (!user.getPassword().equals(userInfo.getPassword())) {
+            log.error(user.getPassword(),userInfo.getPassword());
             return "密码错误!";
         } else {
             log.info("跳转查询页面");

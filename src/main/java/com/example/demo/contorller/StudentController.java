@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -33,8 +34,8 @@ public class StudentController {
     @RequestMapping("/listData")
     public String listData(Model model) {
         List<Student> students = studentService.listData();
-        model.addAttribute("students", students);
+        model.addAttribute("s2", students.get(0));
+        model.addAttribute("s1", students.get(1));
         return "student/studentInfo";
     }
-
 }

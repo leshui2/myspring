@@ -1,25 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.w3.org/1999/xhtml" xmlns:c="">
 <head>
-    <title>Bootstrap 模板</title>
-    <!--<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
-    <!--&lt;!&ndash; 引入 Bootstrap &ndash;&gt;-->
-    <!--&lt;!&ndash; 新 Bootstrap 核心 CSS 文件 &ndash;&gt;-->
-    <!--<link href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">-->
-
-    <!--&lt;!&ndash; jQuery文件。务必在bootstrap.min.js 之前引入 &ndash;&gt;-->
-    <!--<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>-->
-
-    <!--&lt;!&ndash; 最新的 Bootstrap 核心 JavaScript 文件 &ndash;&gt;-->
-    <!--<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <!--&lt;!&ndash; jQuery (Bootstrap 的 JavaScript 插件需要引入 jQuery) &ndash;&gt;-->
-    <!--<script src="https://code.jquery.com/jquery.js"></script>-->
-    <!--&lt;!&ndash;&lt;!&ndash; 包括所有已编译的插件 &ndash;&gt;&ndash;&gt;-->
-    <!--&lt;!&ndash;<script src="js/bootstrap.min.js"></script>&ndash;&gt;-->
-
+    <meta charset="utf-8">
+    <title>Bootstrap 实例 - 上下文类</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table class="table">
     <table class="table">
         <caption>上下文表格布局</caption>
         <thead>
@@ -31,18 +19,19 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${students}" var="s" varStatus="t" step="1">
-            <tr>
-                <th><span th:text="${s.stuId}"></span></th>
-                <th><span th:text="${s.stuName}"></span></th>
-                <th><span th:text="${s.stuAge}"></span></th>
-                <th><span th:text="${s.stuSex}"></span></th>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+
+        <tr class="success">
+            <th><span th:text="${s1.stuId}"></span></th>
+            <th><span th:text="${s1.stuName}"></span></th>
+            <th><span th:text="${s1.stuAge}"></span></th>
+            <th><span th:text="${s1.stuSex}"></span></th>
+        </tr>
+
+
+
 </table>
 
+    </tbody>
 
 </body>
 </html>
