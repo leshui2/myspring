@@ -68,7 +68,6 @@ slave:
       password: TnorNmQhsXbYLX8uV2WCS6aISDKpU9oT9efxVzNSngJ0gkTNZLNHDxRVUZv/i5gM5iQBAmYMKxZQI4YN35NTBQ==
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
-
       druid:
         stat-view-servlet:
           enabled: true
