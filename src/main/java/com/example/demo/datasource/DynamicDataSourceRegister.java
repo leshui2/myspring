@@ -1,5 +1,7 @@
 package com.example.demo.datasource;
 
+import com.alibaba.druid.filter.config.ConfigTools;
+import com.example.demo.untils.PublicKeyUntil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.MutablePropertyValues;
@@ -47,7 +49,16 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
         dsMap.put("driver", env.getProperty("spring.datasource.driver-class-name"));
         dsMap.put("url", env.getProperty("spring.datasource.url"));
         dsMap.put("username", env.getProperty("spring.datasource.username"));
-        dsMap.put("password", env.getProperty("spring.datasource.password"));
+        String ps = env.getProperty("spring.datasource.password");
+        String oldKey = env.getProperty(env.getProperty("spring.datasource.name")+"-key");
+        String newKey = PublicKeyUntil.replaceKey(oldKey);
+        String decryptPassword = null;
+        try {
+            decryptPassword = ConfigTools.decrypt(newKey, ps);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        dsMap.put("password", decryptPassword);
         defaultDataSource = buildDataSource(dsMap);
     }
 
@@ -63,6 +74,16 @@ public class DynamicDataSourceRegister implements ImportBeanDefinitionRegistrar,
             dsMap.put("url", env.getProperty("slave.datasource." + dsPrefix + ".url"));
             dsMap.put("username", env.getProperty("slave.datasource." + dsPrefix + ".username"));
             dsMap.put("password", env.getProperty("slave.datasource." + dsPrefix + ".password"));
+            String ps = env.getProperty("slave.datasource." + dsPrefix + ".password");
+            String oldKey = env.getProperty(dsPrefix+"-key");
+            String newKey = PublicKeyUntil.replaceKey(oldKey);
+            String decryptPassword = null;
+            try {
+                decryptPassword = ConfigTools.decrypt(newKey, ps);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            dsMap.put("password", decryptPassword);
             DataSource ds = buildDataSource(dsMap);
             slaveDataSources.put(dsPrefix, ds);
         }

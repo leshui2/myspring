@@ -9,30 +9,75 @@ server:
             timeout: 1800s
         context-path: /
 
-#数据源配置
+#默认数据源配置
 spring:
   datasource:
-    name: db1
-    url: jdbc:mysql://192.168.0.254:3306/test?serverTimezone=Asia/Shanghai
+    name: db21
+    url: jdbc:mysql://192.168.0.21:3306/test?serverTimezone=Asia/Shanghai
     username: root
-    password: root
+    password: e3yI1RuFVXC0hWZ76qLYou1qW7wcSJfbyfnRJnRou3nZ/Uw5fjiZC+VGecTaV2fQZ6S0sZrfaLtoqB++QS90Rg==
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     druid:
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
-
+      filter:
+        config:
+          enabled: true
+      # 连接池的配置信息
+      # 初始化时建立物理连接的个数
+      initial-size: 3
+      # 连接池最小连接数
+      min-idle: 3
+      # 连接池最大连接数
+      max-active: 20
+      # 获取连接时最大等待时间，单位毫秒
+      max-wait: 60000
+      # 申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。
+      test-while-idle: true
+      # 既作为检测的间隔时间又作为testWhileIdel执行的依据
+      time-between-connect-error-millis: 60000
+      # 销毁线程时检测当前连接的最后活动时间和当前时间差大于该值时，关闭当前连接
+      min-evictable-idle-time-millis: 30000
+      # 用来检测连接是否有效的sql 必须是一个查询语句
+      # mysql中为 select 'x'
+      # oracle中为 select 1 from dual
+      validation-query: select 'x'
+      # 申请连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-borrow: false
+      # 归还连接时会执行validationQuery检测连接是否有效,开启会降低性能,默认为true
+      test-on-return: false
+      # 是否缓存preparedStatement,mysql5.5+建议开启
+      pool-prepared-statements: true
+      # 当值大于0时poolPreparedStatements会自动修改为true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: false
+      # 配置扩展插件
+      filters: stat,wall,slf4j,config
+      connection-properties: config.decrypt=true;config.decrypt.key=${public-key0}
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+      # 定时输出统计信息到日志中，并每次输出日志会导致清零（reset）连接池相关的计数器。
+      time-between-log-stats-millis: 300000
+      # 配置DruidStatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: '/*'
+        exclusions: '*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*'
+      # 配置DruidStatViewServlet
+      stat-view-servlet:
+        # 是否启用StatViewServlet（监控页面）默认值为false（考虑到安全问题默认并未启动，如需启用建议设置密码或白名单以保障安全）
+        enabled: true
+        url-pattern: '/druid/*'
+        # IP白名单(没有配置或者为空，则允许所有访问)
+        allow: 127.0.0.1,192.168.0.1
+        # IP黑名单 (存在共同时，deny优先于allow)
+        deny: 192.168.0.128
+        # 禁用HTML页面上的“Reset All”功能
+        reset-enable: false
+        # 登录名
+        login-username: admin
+        # 登录密码
+        login-password: admin
 #redis 这里用1库
   redis:
     database: 1
@@ -61,8 +106,8 @@ spring:
 #多数据源配置
 slave:
   datasource:
-    name: db1,db2
-    db1:
+    name: db254,db218
+    db254:
       url: jdbc:mysql://192.168.0.254:3306/test?serverTimezone=Asia/Shanghai
       username: root
       password: TnorNmQhsXbYLX8uV2WCS6aISDKpU9oT9efxVzNSngJ0gkTNZLNHDxRVUZv/i5gM5iQBAmYMKxZQI4YN35NTBQ==
@@ -88,10 +133,10 @@ slave:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-    db2:
+    db218:
       url: jdbc:mysql://180.76.103.218:3306/test?serverTimezone=Asia/Shanghai
       username: root
-      password: WdAlsp4YWEwl4/j+1RO3TqDqqqeAYHdMRfczeDiOlhDbfu801Fb7+BWD6ZYbPVH37vM20QvuRuxz0JByynwUjg==
+      password: "WdAlsp4YWEwl4/j+1RO3TqDqqqeAYHdMRfczeDiOlhDbfu801Fb7+BWD6ZYbPVH37vM20QvuRuxz0JByynwUjg=="
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.cj.jdbc.Driver
       druid:
@@ -114,9 +159,9 @@ slave:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-
-public-key1: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJFR813V1xKaKzCSwyKu1eTKLb9elUjRc3q+GOJVg5pEuEoqou/xsvURgUO80Wkx0dacLRGR6+6htfD6t8QX7w0CAwEAAQ==
-public-key2: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAInrkfj+NG+HcGl7IEP3WFwVrVw4gQ/vVfcbFQSjMl+f8eFjIaMei7Mff/NmGTaAzvxhqdz851ctU3fTI0MC+E8CAwEAAQ==
+db21-key: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAwPAAE7IQNjm4OehsuvLGoyujeH0gVBCnE8Hvr9jXn84UTAzz6/Y+3ip3KFrwwygcj9XfXWDao07rQcuHHOEMc8CAwEAAQ=="
+db254-key: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAFJR813V1xKaKzCSwyKu1eTKLb9elUjRc3q+GOJVg5pEuEoqou/xsvURgUO80Wkx0dacLRGR6+6htfD6t8QX7w0CAwEAAQ=="
+db218-key: "MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAnIrkfj+NG+HcGl7IEP3WFwVrVw4gQ/vVfcbFQSjMl+f8eFjIaMei7Mff/NmGTaAzvxhqdz851ctU3fTI0MC+E8CAwEAAQ=="
 #mybatis配置
 mybatis:
   mapper-locations: classpath:mapping/*.xml

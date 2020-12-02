@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/User")
 @Slf4j
-public class LoginController {
+public class UserController {
     @Autowired
     UserMapper userMapper;
 
@@ -28,12 +28,18 @@ public class LoginController {
         if (userInfo == null) {
             return "此用户不存在!";
         } else if (!user.getPassword().equals(userInfo.getPassword())) {
-            log.error(user.getPassword(),userInfo.getPassword());
+            log.error(user.getPassword(), userInfo.getPassword());
             return "密码错误!";
         } else {
             log.info("跳转查询页面");
             return "redirect:/student/listData";
         }
+    }
+
+    @RequestMapping("register")
+    public String registerUser(User user) {
+        int insert = userMapper.insert(user);
+        return null;
     }
 
     /*@ResponseBody
