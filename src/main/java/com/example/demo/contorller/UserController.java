@@ -2,6 +2,8 @@ package com.example.demo.contorller;
 
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.service.UserService;
+import com.example.demo.untils.JsonResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Slf4j
 public class UserController {
     @Autowired
-    UserMapper userMapper;
+    UserService userService;
 
     //登录
     @RequestMapping("login")
@@ -24,7 +26,7 @@ public class UserController {
 
     @RequestMapping("getUserInfo")
     public String getUserInfo(User user) {
-        User userInfo = userMapper.getUserInfo(user);
+        User userInfo = userService.getUserInfo(user);
         if (userInfo == null) {
             return "此用户不存在!";
         } else if (!user.getPassword().equals(userInfo.getPassword())) {
@@ -36,10 +38,12 @@ public class UserController {
         }
     }
 
+    @ResponseBody
     @RequestMapping("register")
-    public String registerUser(User user) {
-        int insert = userMapper.insert(user);
-        return null;
+    public JsonResult registerUser(User user) {
+        int insert = userService.insert(user);
+        log.info("注册结果:{}", insert);
+        return JsonResult.ok("注册成功").put("code",insert);
     }
 
     /*@ResponseBody

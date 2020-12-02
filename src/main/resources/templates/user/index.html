@@ -7,7 +7,6 @@
         * {
             margin: 0px;
         }
-
         #content {
             margin: 150px auto;
             width: 100%;
@@ -18,7 +17,6 @@
             background-image: -webkit-linear-gradient(243deg, #21D4FD 0%, #B721FF 100%);
             background-image: -moz-linear-gradient(243deg, #21D4FD 0%, #B721FF 100%);
             background-image: -o-linear-gradient(243deg, #21D4FD 0%, #B721FF 100%);
-
         }
 
         #box {
@@ -82,8 +80,11 @@
 <body>
 <div id="content">
     <div id="box">
-        <div class="title">Login</div>
+        <div class="title">Login
+            <button style=" font-size: 14px;padding: 8px 15px ;text-align: center;" onclick="window.location.href='register.html'">注册</button>
+        </div>
         <div class="input">
+
             <form class="loginForm" action="/User/getUserInfo" method="post">
                 <input type="text" id="name" name="name" placeholder="用户名"/>
                 <br>
@@ -93,8 +94,9 @@
                 <!--<br>-->
                 <!--<input type="submit" value="登录" onclick="getuser()"  id="submitBnt">-->
                 <button type="submit" onclick="getuser()" >登录</button>
-                <button type="reset" placeholder="重置" style="width:20%" >登录</button>
+                <button type="reset" placeholder="重置" >重置</button>
             </form>
+
         </div>
     </div>
 </div>

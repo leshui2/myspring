@@ -6,10 +6,13 @@
         <result column="name" property="name" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
     </resultMap>
+    <sql id="Base_Column_List">
+    id, name, password
+    </sql>
     <insert id="insert" parameterType="com.example.demo.entity.User">
-    insert into user (id, name, password
+    insert into user ( name, password
       )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+    values (#{name,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
       )
   </insert>
     <insert id="insertSelective" parameterType="com.example.demo.entity.User">
@@ -37,9 +40,7 @@
             </if>
         </trim>
     </insert>
-    <sql id="Base_Column_List">
-    id, name, password
-    </sql>
+
     <select id="getUserInfo" resultMap="BaseResultMap" parameterType="com.example.demo.entity.User">
         select
         <include refid="Base_Column_List"/>

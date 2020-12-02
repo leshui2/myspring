@@ -8,6 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/***
+ *
+ */
 @Service
 @Slf4j
 public class UserService {
@@ -18,6 +21,12 @@ public class UserService {
     public User getUserInfo(User user) {
         User userInfo = userMapper.getUserInfo(user);
         return userInfo;
+    }
+
+    //注册
+    public int insert(User user) {
+        int insert = userMapper.insert(user);
+        return insert;
     }
 
 }
